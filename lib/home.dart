@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool _saved = false;
+
+  void _iconButtonSaveCliked(bool value) {
+    setState(() {
+      _saved = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +66,9 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.favorite_border),
-                  onPressed: () {},
-                  color: Colors.redAccent.shade100,
+                SavedIcon(
+                  saved: _saved,
+                  onChanged: _iconButtonSaveCliked,
                 ),
                 FavoritedLike(),
               ],
@@ -207,6 +219,26 @@ class _FavoritedLikeState extends State<FavoritedLike> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class SavedIcon extends StatelessWidget {
+  const SavedIcon({this.saved = false, required this.onChanged});
+
+  final bool saved;
+  final ValueChanged<bool> onChanged;
+
+  void updateIcon() {
+    onChanged(!saved);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: saved ? Icon(Icons.favorite_border_outlined) : Icon(Icons.favorite),
+      onPressed: updateIcon,
+      color: Colors.redAccent.shade100,
     );
   }
 }
