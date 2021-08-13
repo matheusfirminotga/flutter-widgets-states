@@ -53,6 +53,11 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
+                IconButton(
+                  icon: Icon(Icons.favorite_border),
+                  onPressed: () {},
+                  color: Colors.redAccent.shade100,
+                ),
                 FavoritedLike(),
               ],
             ),
@@ -170,7 +175,7 @@ class FavoritedLike extends StatefulWidget {
 }
 
 class _FavoritedLikeState extends State<FavoritedLike> {
-  int _countLikes = 0;
+  int _countLikes = 21;
   bool _liked = false;
 
   void _updateCountLikes() {
@@ -195,7 +200,7 @@ class _FavoritedLikeState extends State<FavoritedLike> {
           color: Colors.redAccent.shade100,
         ),
         Text(
-          '$_countLikes Curtidas',
+          '$_countLikes',
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey[700],
