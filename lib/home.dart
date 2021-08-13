@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  int _countLikes = 0;
-  bool _liked = false;
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,36 +53,7 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 ),
-                Column(
-                  children: [
-                    IconButton(
-                      icon: _liked
-                          ? Icon(Icons.star)
-                          : Icon(Icons.star_border_outlined),
-                      onPressed: () {
-                        if (!_liked) {
-                          setState(() {
-                            _liked = true;
-                            _countLikes++;
-                          });
-                        } else {
-                          setState(() {
-                            _liked = false;
-                            _countLikes--;
-                          });
-                        }
-                      },
-                      color: Colors.redAccent.shade100,
-                    ),
-                    Text(
-                      '$_countLikes Curtidas',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
+                FavoritedLike(),
               ],
             ),
           ),
@@ -195,6 +159,49 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+    );
+  }
+}
+
+// Aqui o própio widget gerencia seu estado
+class FavoritedLike extends StatefulWidget {
+  @override
+  _FavoritedLikeState createState() => _FavoritedLikeState();
+}
+
+class _FavoritedLikeState extends State<FavoritedLike> {
+  int _countLikes = 0;
+  bool _liked = false;
+
+  void _updateCountLikes() {
+    setState(() {
+      if (!_liked) {
+        _liked = true;
+        _countLikes++;
+      } else {
+        _liked = false;
+        _countLikes--;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        IconButton(
+          icon: _liked ? Icon(Icons.star) : Icon(Icons.star_border_outlined),
+          onPressed: _updateCountLikes,
+          color: Colors.redAccent.shade100,
+        ),
+        Text(
+          '$_countLikes Curtidas',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[700],
+          ),
+        ),
+      ],
     );
   }
 }
